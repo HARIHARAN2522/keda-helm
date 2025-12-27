@@ -126,10 +126,10 @@ operator:
     # image: 'busybox:glibc'
   # -- Liveness probes for operator ([docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/))
   livenessProbe:
-    initialDelaySeconds: 25
-    periodSeconds: 10
+    initialDelaySeconds: 0
+    periodSeconds: 0
     timeoutSeconds: 1
-    failureThreshold: 3
+    failureThreshold: 1
     successThreshold: 1
   # -- Readiness probes for operator ([docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes))
   readinessProbe:
