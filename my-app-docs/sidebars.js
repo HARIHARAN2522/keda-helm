@@ -38,10 +38,17 @@ module.exports = {
         'features/workspace',
         'features/cloud-connector',
         'features/clusters',
+        {
+      type: 'category',
+      label: 'workflow',
+      collapsed: true,
+      items: [
         'features/workflow/overview', 
         'features/workflow/aws',
         'features/workflow/gcp',
-        'features/workflow/azure',
+        'features/workflow/azure'
+      ],
+        },
         'features/scm-connector',
         'features/tools',
         'features/database',

@@ -27,9 +27,9 @@ View all your connected cloud accounts in one place.
 Each connected account shows:
 
 - **Provider** — The cloud platform (e.g., `AWS Cloud`)
-- **Account** — Your account name (e.g., `vignesh_cm`)
+- **Account** — Your account name (e.g., `jaga_cm`)
 - **Region** — Where your resources are deployed (e.g., `us-east-1`)
-- **Account ID** — Last 6 digits of your account ID (e.g., `...610918`)
+- **Account ID** — Last 6 digits of your account ID (e.g., `...000198`)
 - **Status** — `Connected` (green badge)
 
 >   To disconnect an account, click the **red X** button.
@@ -40,30 +40,39 @@ Each connected account shows:
 
 ### Amazon Web Services (AWS)
 
-- Manage EC2, S3, RDS, Lambda, VPC, and more
-- Use IAM credentials for secure access
-- Monitor costs and usage in real-time
+To connect an AWS account, you provide an IAM access key and secret key from a dedicated user (not the root account).
+
+- Required permissions: A custom IAM policy that grants least-privilege access to services like EC2, S3, EKS, IAM, and CloudFormation.
+- Validation: CloudMaSa tests the connection in real time and reports missing permissions.
+- Security: Credentials are encrypted at rest and never logged or exposed in the UI.
+- Use case: Manage EKS clusters, auto-scaling groups, S3 buckets, and more—all from the CloudMaSa console.
+
+## Google Cloud Platform (GCP)
+GCP integration uses a service account key file (JSON) and a Project ID.
+
+- Required roles: Assign roles like Compute Viewer, Kubernetes Engine Admin, and Storage Admin to the service account—only what’s needed.
+- Auto-detection: If your key includes the project ID, CloudMaSa fills it in automatically.
+- Validation: A “Test Connection” button confirms API access before saving.
+- Use case: Deploy GKE clusters, manage Cloud SQL instances, or provision Cloud Functions without leaving the platform
+
 
 ### Microsoft Azure
 
-- Manage VMs, Storage, SQL Database, Functions, and more
-- Use Service Principal for secure access
-- Integrate with Azure Active Directory
+Azure connections use a Service Principal—defined by Tenant ID, Client ID, and Client Secret—along with a Subscription ID.
 
-### Google Cloud Platform (GCP)
-
-- Manage Compute Engine, Cloud Storage, BigQuery, and more
-- Use Service Account Key for secure access
-- View resource usage and billing
+- Required permissions: The Service Principal must have at least the Contributor role on the target resource group or subscription.
+- Validation: CloudMaSa checks for required Azure Resource Manager (ARM) permissions during setup.
+- Security: Secrets are stored in an encrypted vault; no plaintext exposure.
+- Use case: Provision AKS clusters, manage Blob Storage, or deploy Virtual Machine Scale Sets with full auditability.
 
 
 
-## Best Practices
-
->  Always use **IAM roles** instead of access keys for production environments  
->  Limit permissions to required services  
->  Enable **CloudTrail** (AWS), **Azure Activity Logs**, or **GCP Audit Logs** for auditing  
->  Regularly review connected accounts and permissions
+## How It Works Behind the Scenes
+- All cloud connections are stored per workspace, so teams can manage their own accounts without cross-access.
+- Credentials are never used in browser-side code—all API calls happen server-side.
+- Every action (scan, deploy, delete) is logged with user, timestamp, and target resource.
+- Connections support multi-account / multi-project / multi-subscription setups out of the box.
+- Once connected, your cloud provider appears in the Work Flow, Clusters, and Cloud Accounts views—ready for automation.
 
 
 
